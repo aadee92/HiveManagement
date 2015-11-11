@@ -23,6 +23,11 @@ class Region(models.Model):
     def __str__(self):
         return self.name
 
+class FieldManager(models.Manager):
+    def get_by_natural_key(self, name, date_added):
+        return self.get(name = name, date_added = date_added)
+
+
 class Field(models.Model):
     name = models.CharField(max_length=25)
     date_added = models.DateField(auto_now_add=True) #AKA Delivery Date
@@ -90,7 +95,9 @@ class Field(models.Model):
     #
     def previous_region(self):
         pallets = self.palletreport_set.distinct('tag__id')
-        
+
+    class Meta:
+        unique_together = (('name', 'date_added'),)
 
 class PalletReport(models.Model):
     field = models.ForeignKey('Field')
@@ -131,9 +138,44 @@ class WorkLog(models.Model):
     team = models.ForeignKey('Team')
     date_work = models.DateField(default=timezone.now)
     hives_alive = models.IntegerField()
+
+    start_date = None
+
     def __str__(self):
         return self.field.name + "-" + self.task.name + "-" + self.team.name + "-" + str(self.date_work)
 
+    #Returns the percent alive from the specified start date
+    def survival_from_date(self):
+
+        if self.start_date is None:
+            start_logs = self.field.worklog_set.all().order_by('date_work')
+        else:
+            start_logs = self.field.worklog_set.filter(date_work__gte=self.start_date).order_by('date_work')
+
+        # If there is not start_log, either:
+        # a. Field has not been set (its a dummy instance)
+        #     -FALSE: Field was set when the instance was made... (see the view)
+        # b. There were no instances found.
+        # -- Don't return empty string.
+        if not start_logs:
+            return  ""
+        else:
+            #Find the first instance of a number, if any:
+            for log in start_logs:
+                try:
+                    hives_start = int(log.hives_alive)
+                    hives_now = int(self.hives_alive)
+                    if hives_start == 0:
+                        survival_rate = "{:.0%}".format(0)
+                    else:
+                        survival_rate = "{:.0%}".format(hives_now/hives_start)
+
+                    break
+                except ValueError:
+                    survival_rate = ""
+                    #survival_rate = "\"" + str(log.hives_alive) + "-" + str(self.hives_alive) +"\""
+
+        return survival_rate
 
 admin.site.register(Team, admin.GeoModelAdmin)
 admin.site.register(WorkLog, admin.GeoModelAdmin)

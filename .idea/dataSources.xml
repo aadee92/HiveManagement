@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="4280789757">
+    <data-source source="LOCAL" name="PostgreSQL - BeeManagement@localhost" uuid="26f2eefc-41fc-4f44-b170-f2e572ee8e15">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/BeeManagement</jdbc-url>
+    </data-source>
+  </component>
+</project>

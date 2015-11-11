@@ -39,7 +39,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'HiveManagement',
-    'django_tables2'
 )
 
 MIDDLEWARE_CLASSES = (
