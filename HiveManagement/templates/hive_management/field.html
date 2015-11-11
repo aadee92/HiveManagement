@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>Field Summary</h1>
+<H2>{{ field.name }} ({{ field.source_region.name }})<H2>
+<H3>{{ field.locality }}, {{ field.county }}, {{ field.state }}</H3>
+<table border =1>
+
+        <th>Count</th>
+        <th>Pallet Number</th>
+        <th>Last Report</th>
+        <th>Previous Field</th>
+        <th>Is Present</th>
+
+{% for report in pallet_reports %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td><a href="{% url 'hive_management:pallet' report.tag.id %}">{{report.tag.id}}</td>
+        <td>{{report.date}}</td>
+        <td>a</td>
+        <td>b</td>
+    </tr>
+{% endfor %}
+</table>
+
+<table border =1>
+{% for tag in tags %}
+    <tr>
+        <td>{{tag.id}}</td>
+    </tr>
+{% endfor %}
+</table>
+</body>
+</html>

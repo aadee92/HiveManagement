@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <h1>Pallet History</h1>
+    <h2>{{pallet.id}}:{{pallet.uniqueTID}}</h2>
+    <table border =1>
+            <th></th>
+            <th>Field</th>
+            <th>Region</th>
+            <th>City/Town</th>
+            <th>County</th>
+            <th>State</th>
+            <th>Date</th>
+            <th>Number Alive</th>
+    {% for report in pallet_reports %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="{% url 'hive_management:field' report.field.id %}">{{ report.field.name }}</td>
+            <td>{{ report.field.source_region.name }}</td>
+            <td>{{ report.field.locality}}</td>
+            <td>{{ report.field.county }}</td>
+            <td>{{ report.field.state }}</td>
+            <td>{{ report.date }}</td>
+            <td>{{ report.number_alive }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</body>
+</html>
