@@ -13,3 +13,4 @@ class TagCheckInInline(admin.TabularInline):
 # Register your models here.
 admin.site.register(Field, FieldAdmin)
 admin.site.register(Tag,TagAdmin)
+
