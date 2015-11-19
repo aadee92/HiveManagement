@@ -54,6 +54,7 @@ def field(request, field_id):
     return render(request, 'hive_management/field.html', {'field': field, 'pallet_reports' : pallet_reports, 'tags': tags})
 
 def analysis(request):
+    # My New Changes to Analysis
     # Analysis by Region / Manager (As Historic)
     # LET INFORMATION WORK ON THE (WORK_LOG . NUMBER_ALIVE)
     # ->| REGION  | # MANAGED | # ALIVE | # SURVIVAL RATE
@@ -178,3 +179,4 @@ def upload_json(request):
     else:
         raise SuspiciousOperation('Invalid JSON')
     return HttpResponse(request.body, content_type='text/plain')
+
