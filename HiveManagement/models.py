@@ -8,6 +8,12 @@ import json
 
 import sys
 
+
+
+class RegionManager(models.Manager):
+    def get_by_natural_key(self, name):
+        return self.get(name = name)
+
 class Tag(models.Model):
     #UID 64Bit Unique TID Serial Number
     uniqueTID = models.CharField(max_length=64)
@@ -19,7 +25,7 @@ class Tag(models.Model):
         return check_in_set
 
 class Region(models.Model):
-    name = models.CharField(max_length=100, default="Unknown")
+    name = models.CharField(max_length=100, default="Unknown", unique=True)
     def __str__(self):
         return self.name
 
@@ -39,8 +45,6 @@ class Field(models.Model):
     locality = models.CharField(max_length=100, blank=True) # ("locality","political")
     county = models.CharField(max_length=100, blank=True)# (administrative-area_level_2"
     state = models.CharField(max_length=100, blank=True)# (administrative_are_level_1")
-
-    weather_conditions = models.CharField(max_length=100, blank=True)
     
     #http://stackoverflow.com/questions/20169467/how-to-convert-from-longitude-and-latitude-to-country-or-city
     def __str__(self):
@@ -128,6 +132,9 @@ class Team(models.Model):
     is_active = models.BooleanField(default=True)
     def __str__(self):
         return self.name
+    class Meta:
+        unique_together = ('name',)
+
 
 class WorkLog(models.Model):
     #TODO: Add a unique_together constraint for Field and Task, and overwrite with the newest one.
