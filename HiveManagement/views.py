@@ -9,7 +9,7 @@ from django.core.exceptions import SuspiciousOperation
 #REST API:
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, generics
-from serializers import UserSerializer, GroupSerializer#, WorkLogSerializer
+from HiveManagement.serializers import UserSerializer, GroupSerializer#, WorkLogSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
